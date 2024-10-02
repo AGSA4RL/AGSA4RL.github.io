@@ -29,13 +29,13 @@
       <a href="https://genforce.github.io/" target="_blank"><img src="./assets/genforce.png"></a>
     </div> -->
     <div class="title", style="padding-top: 25pt;">  <!-- Set padding as 10 if title is with two lines. -->
-      Guarded Policy Optimization with <br> Imperfect Online Demonstrations
+     Policy Optimization under Imperfect Human <br> Interactions with Agent-Gated Shared Autonomy
     </div>
   </div>
   <!-- === Title Ends === -->
   <div class="author">
     <p style="text-align:center">Submission to ICLR 2025</p>
-    <a href="#" target="_blank">Anonymous Authors</a><sup>1</sup>,&nbsp;&nbsp;
+    <a href="#" target="_blank">Anonymous Authors</a>&nbsp;&nbsp;
 
 </div>
 
@@ -69,10 +69,7 @@
 <div class="section">
   <div class="title">Method</div>
   <div class="body">
-    Previous works assume the availability of a well-performing teacher policy. It intervenes whenever the student acts differently.
-     However, it is time-consuming or even impossible to obtain a well-performing teacher in many real-world applications
-      such as object manipulation with robot arms and autonomous driving. If we turn to employ a suboptimal teacher,
-      incorrect teacher intervention will result in a burdened student policy.
+
     </div>
   <div class="teaser" style="width: 85%; margin-left: 70pt">
     <img src="assets/different_takeover.png">
@@ -82,20 +79,10 @@
     </div>
   </div>
   <div class="body">
-    We illustrate this phenomenon with the example in Fig. 2 where a slow vehicle in gray is driving in front of the ego-vehicle in blue. 
-    The student policy is aggressive and would like to overtake the gray vehicle to reach the destination faster, 
-    while the teacher intends to follow the vehicle conservatively. In this scenario, the teacher will intervene the student's exploration as 
-    it behaves differently. The student policy can never accomplish a successful overtake.
+
    </div>
    <div class="body">
-    To address this issue, we propose a new algorithm called Teacher-Student Shared Control (TS2C). It only allows the teacher to intervene when the student action is dangerous or has low expected return. 
-    The risk and the expected return of the student action is jointly determined by the value functions, leading to the following intervention function:
-$$\mathcal{T}(s)=\begin{cases}
-1 \quad\text{if}~V^{\pi_t}\left(s\right)-\mathbb{E}_{a\sim\pi_s(\cdot|s)}Q^{\pi_t}\left(s, a\right)>\varepsilon,\\[.8em]
-0 \quad\text{otherwise},
-\end{cases}$$
-where \(V^{\pi_t}\) and \(Q^{\pi_t}\) are the teacher's state and action-value functions, \(\pi_s(\cdot|s)\) is the student policy, and
- \(\varepsilon\) is a threshold that controls the risk tolerance of the teacher.
+
    </div>
 </div> 
 <!-- === Result Section Starts === -->
