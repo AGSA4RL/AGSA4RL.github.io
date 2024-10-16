@@ -124,8 +124,8 @@
       </div>
     </div>
     We present performance curves for ablation studies in the Walker2d environment in Fig. 3. We consider the following methods:
+    
     <ul>
-
     <li>“AGSA w/ Failure Prediction” and “w/ Ensemble”
     are alternative approaches for constructing the gating agent. Both methods keep the learning agent
     training unchanged. </li>
@@ -136,6 +136,19 @@
     “AGSA w/ \(r_\psi\) as \(r_\pi\) ” refers to using the reward model \(r_\psi\) trained from human preference feedback as the proxy
     reward \(r_\pi\) to train the learning agent, in the same way as PbRL algorithms.</li>
     </ul>
+
+
+    In the following video, we visualize two stages of training in the Walker2d environment, both with and without simulated human intervention.
+    
+    <!-- Insert Video -->
+    <div class="teaser" style="width: 85%; margin-left: 50pt">
+      <video width="100%" controls>
+        <source src="assets/mujoco_plot.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="text">
+          Video 1: Training visualization in the Walker2d environment both with and without simulated human intervention.
+      </div>
 
   </div>
 </div>
