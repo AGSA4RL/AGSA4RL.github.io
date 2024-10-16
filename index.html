@@ -34,7 +34,7 @@
   </div>
   <!-- === Title Ends === -->
   <div class="author">
-    <p style="text-align:center">Submission to ICLR 2025</p>
+    <p style="text-align:center">Submitted to ICLR 2025</p>
     <a href="#" target="_blank">Anonymous Authors</a>&nbsp;&nbsp;
 
 </div>
@@ -50,18 +50,20 @@
 <div class="section">
   <div class="title">Overview</div>
   <div class="teaser" style="width: 85%; margin-left: 70pt">
-    <img src="assets/overview.png">
+    <img src="assets/intro-1.png">
     <div class="text">
         <br>
         Fig. 1: Overview of the proposed method.
     </div>
 </div>
   <div class="body">
-    As shown in Fig. 1, we include a teacher policy \(\pi_t\) in the training loop of RL. 
-    During the training of the student policy, both \(\pi_s\) and \(\pi_t\) receive current state \(s\) from the environment. 
-    They propose actions \(a_s\) and \(a_t\), and then a value-based intervention function \(\mathcal{T}(s)\) determines which 
-    action should be taken and applied to the environment. The student policy is then updated with data collected 
-    through both policies.   
+    As shown in Fig. 1, The learning agent (in purple) interacts with the environment under the monitoring of the gating agent (in black). 
+    The gating agent decides when to request human intervention.
+    Learning agent trajectories are in green and human trajectories are in red and yellow. 
+    Human feedbacks are denoted with thumbs up and down. 
+    Feedbacks at \(t_1\) and \(t_3\) are human evaluations on whether the gating agent triggers control switch at proper timesteps. 
+    Feedbacks at \(t_2\) and \(t_4\) are human preferences on whether the current intervention trajectory is better than the previous one. 
+    For example, the trajectory between \(t_3\) and \(t_4\) is better than that between \(t_1\) and \(t_2\), so human may provide positive feedback on \(t_4\).
   </div>
 </div>
 <!-- === Overview Section Ends === -->
@@ -72,14 +74,30 @@
 
     </div>
   <div class="teaser" style="width: 85%; margin-left: 70pt">
-    <img src="assets/different_takeover.png">
+    <img src="assets/method-1.png">
     <div class="text">
         <br>
-        Fig. 2:     In an autonomous driving scenario, the ego vehicle is the blue one on the left, following the gray vehicle on the right. The upper trajectory is proposed by the student to overtake and the lower trajectory is proposed by the teacher to keep following. 
+        Fig. 2:   The framework for training both the gating agent and the learning agent. 
     </div>
   </div>
   <div class="body">
+    To properly train the gating value function \(Q_g\) for optimal intervention timing, human participants follow three steps, as illustrated in Fig. 3 (upper): <br>
+        &ensp; 1. Providing a binary signal \(I(s_t)\) that assesses whether the current environment state is indeed worth intervention and is intervened in time. 
+           <!-- Such human evaluation provides a direct feedback on whether gating agent's intervention decisions successfully indicates dangerous or unexplored areas. 
+           Its advantage over directly imitating human intervention decisions is that humans have time to examine the intervention quality, 
+           rather than making real-time decisions that can be influenced by tiredness, carelessness, or network latency.  -->
+           <br>
+        &ensp; 2. Interacting with the environment for \(T\) steps and offering online demonstration segment 
+           \(\sigma=(s_t,a^{\text{human}}_t,\dots,s_{t+T-1},a^{\text{human}}_{t+T-1})\), 
+           aiming at guiding the learning agent out of the region that is dangerous or no longer needs exploration. <br>
+        &ensp; 3. Providing a preference signal \(p_t=P_\psi[\sigma\succ \sigma']\in\{0, 0.5, 1\}\), 
+           indicating whether current segment  \(\sigma\) is better than the previous segment \(\sigma'\). 
 
+           <!-- As human participants are familiar with recent trajectories of themselves, this way of preference pair construction 
+           saves the burden for humans of reviewing previously sampled trajectories.
+           Bad human samples can happen due to imperfect human behaviors or untimely intervention decision of the gating agent. 
+           By assigning low human preference on these samples, the gating agent can learn from human demonstrations at all performance levels 
+           and mistakes in the intervention decision made by itself. -->
    </div>
    <div class="body">
 
@@ -89,33 +107,17 @@
 <div class="section">
   <div class="title">Results</div>
   <div class="body">
-    The training result  with three different levels of teacher policy can be seen in Fig. 3. 
-    The first row shows that the performance of TS2C is not limited by the imperfect teacher policies.
-     It converges within 200k steps, independent of different performances of the teacher. 
-     EGPO and Importance Advicing is clearly bounded by teacher-medium and teacher-low, 
-     performing much worse than TS2C with imperfect teachers. The second row of Fig. 3 shows TS2C has lower training cost than both algorithms. 
+
     <div class="teaser" style="width: 85%; margin-left: 50pt">
-      <img src="assets/q1.png">
+      <img src="assets/walker2d_ablation-1.png">
       <div class="text">
           <br>
-          Fig. 3: Comparison between our method TS2C and other algorithms with teacher policies providing 
-          online demonstrations. "Importance" refers to the Importance Advising algorithm. 
-          For each column, the involved teacher policy has high, medium, and low performance respectively. 
+          Fig. 3: Learning curves of methods in ablation study. We consider the Walker2d environment. 
+          The lines are average return across four different trials and the shadow areas denote the standard deviation.
       </div>
     </div>
 
-    The performances of TS2C in different MuJoCo environments are presented in Fig. 4. The figures show that 
-    TS2C is generalizable to different environments. It can outperform SAC in all three MuJoCo environments taken into
-consideration. On the other hand, though the EGPO algorithm has the best performance in the
-Pendulum environment, it struggles in the other two environments, namely Hopper and Walker
-    <div class="teaser" style="width: 85%; margin-left: 50pt">
-      <img src="assets/mujoco_thin.png">
-      <div class="text">
-          <br>
-          Fig. 4: Performance comparison between our method TS2C and baseline algorithms on three
-          environments from MuJoCo.
-      </div>
-    </div>
+
   </div>
 </div>
 <!-- === Result Section Ends === -->
