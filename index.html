@@ -82,17 +82,24 @@
   </div>
   <div class="body">
     To properly train the gating value function \(Q_g\) for optimal intervention timing, human participants follow three steps, as illustrated in Fig. 3 (upper): <br>
-        &ensp; 1. Providing a binary signal \(I(s_t)\) that assesses whether the current environment state is indeed worth intervention and is intervened in time. 
+    <ol>
+        <li> 
+          Providing a binary signal \(I(s_t)\) that assesses whether the current environment state is indeed worth intervention and is intervened in time. 
+        </li>
            <!-- Such human evaluation provides a direct feedback on whether gating agent's intervention decisions successfully indicates dangerous or unexplored areas. 
            Its advantage over directly imitating human intervention decisions is that humans have time to examine the intervention quality, 
            rather than making real-time decisions that can be influenced by tiredness, carelessness, or network latency.  -->
-           <br>
-        &ensp; 2. Interacting with the environment for \(T\) steps and offering online demonstration segment 
+        <li> 
+          Interacting with the environment for \(T\) steps and offering online demonstration segment 
            \(\sigma=(s_t,a^{\text{human}}_t,\dots,s_{t+T-1},a^{\text{human}}_{t+T-1})\), 
-           aiming at guiding the learning agent out of the region that is dangerous or no longer needs exploration. <br>
-        &ensp; 3. Providing a preference signal \(p_t=P_\psi[\sigma\succ \sigma']\in\{0, 0.5, 1\}\), 
+           aiming at guiding the learning agent out of the region that is dangerous or no longer needs exploration.
+        </li>
+        <li> 
+          Providing a preference signal \(p_t=P_\psi[\sigma\succ \sigma']\in\{0, 0.5, 1\}\), 
            indicating whether current segment  \(\sigma\) is better than the previous segment \(\sigma'\). 
+          </li>
 
+      </ol>
            <!-- As human participants are familiar with recent trajectories of themselves, this way of preference pair construction 
            saves the burden for humans of reviewing previously sampled trajectories.
            Bad human samples can happen due to imperfect human behaviors or untimely intervention decision of the gating agent. 
@@ -116,7 +123,19 @@
           The lines are average return across four different trials and the shadow areas denote the standard deviation.
       </div>
     </div>
+    We present performance curves for ablation studies in the Walker2d environment in Fig. 3. We consider the following methods:
+    <ul>
 
+    <li>“AGSA w/ Failure Prediction” and “w/ Ensemble”
+    are alternative approaches for constructing the gating agent. Both methods keep the learning agent
+    training unchanged. </li>
+    <li>“AGSA w/o Human Preference Feedback” and “w/o Human Evaluative Feedback”
+    remove \(r_\psi (s_t, a_t)\) and \(I(s_t)\) respectively when computing the gating agent reward \(r_G
+    \). </li>
+    <li>
+    “AGSA w/ \(r_\psi\) as \(r_\pi\) ” refers to using the reward model \(r_\psi\) trained from human preference feedback as the proxy
+    reward \(r_\pi\) to train the learning agent, in the same way as PbRL algorithms.</li>
+    </ul>
 
   </div>
 </div>
