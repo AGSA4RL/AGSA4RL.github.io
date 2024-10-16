@@ -139,7 +139,11 @@
 
 
     In the following video, we visualize two stages of training in the Walker2d environment, both with and without simulated human intervention.
-    
+    At the early stage of training, the learning agent is likely to fall down without intervention due to its poor ability to balance.
+    Instead, the gating agent can trigger simulated human intervention to prevent the learning agent from falling down, leading to a good behavior
+    policy that facilitates the exploration process.
+    Near the end of training, the learning agent can walk stably without intervention, and the gating agent can learn to avoid unnecessary intervention.
+
     <!-- Insert Video -->
     <div class="teaser" style="width: 85%; margin-left: 50pt">
       <video width="100%" controls>
